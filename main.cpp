@@ -1,15 +1,14 @@
 #include "raylib.h"
 #include <algorithm>
-#include <vector>
 #include <complex>
+
+using namespace std::complex_literals;
 
 #define WIDTH 1200
 #define HEIGHT 800
 #define R 2
-#define C std::complex<double>(-0.8, 0.156);
-#define MAX_ITERS 1000000
-
-std::vector<std::vector<int>> pixels;
+#define C (-0.8 + 0.156i);
+#define MAX_ITERS 100
 
 std::complex<double> z_from_coord(const int& x, const int& y) {
     const double real = static_cast<double>(x) / WIDTH  * 2 * R - R;
