@@ -4,11 +4,11 @@
 
 using namespace std::complex_literals;
 
-#define WIDTH 1200
-#define HEIGHT 800
-#define R 2
-#define C (-0.8 + 0.156i);
-#define MAX_ITERS 100
+constexpr auto WIDTH = 1200;
+constexpr auto HEIGHT = 800;
+constexpr auto R = 2;
+constexpr auto C = -0.8 + 0.156i;
+constexpr auto MAX_ITERS = 100;
 
 std::complex<double> z_from_coord(const int& x, const int& y) {
     const double real = static_cast<double>(x) / WIDTH  * 2 * R - R;
