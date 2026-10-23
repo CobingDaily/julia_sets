@@ -31,7 +31,7 @@ vec2 square_z(vec2 z) {
     return mul_z(z, z);
 }
 
-vec2 do_iteration(vec2 z, vec2 C) {
+vec2 do_iteration(vec2 z) {
     return mul_z(z, z) + C;
 }
 
@@ -39,12 +39,12 @@ float magnitude(vec2 z) {
     return sqrt(z.x * z.x + z.y * z.y);
 }
 
-int count_iterations(vec2 z, vec2 C, int max_iterations) {
+int count_iterations(vec2 z) {
     int iter = 0;
     
     float mag = magnitude(z);
     while(mag < 2 && iter < max_iterations) {
-        z = do_iteration(z, C);
+        z = do_iteration(z);
         mag = magnitude(z);
 
         iter++;
@@ -53,7 +53,7 @@ int count_iterations(vec2 z, vec2 C, int max_iterations) {
     return iter;
 }
 
-vec4 iterations_to_color(int iterations, int max_iterations) {
+vec4 iterations_to_color(int iterations) {
     if (iterations == max_iterations) return vec4(vec3(0.0), 1.0);
     float f_iterations = float(iterations);
     float f_max_iterations = float(max_iterations);
@@ -70,9 +70,9 @@ vec4 iterations_to_color(int iterations, int max_iterations) {
 
 void main()
 {
-    vec2 z = vec2(2.0 * R) * fragTexCoord - vec2(R);
-    int iterations = count_iterations(z, C, max_iterations);
-    vec4 color = iterations_to_color(iterations, max_iterations);
+    vec2 z = 2.0 * R * fragTexCoord - R;
+    int iterations = count_iterations(z);
+    vec4 color = iterations_to_color(iterations);
 
     finalColor = color * colDiffuse * fragColor;
 }
