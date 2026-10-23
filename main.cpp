@@ -1,9 +1,8 @@
 #include "raylib.h"
 #include <cmath>
 
-constexpr auto WIDTH = 1280;
-constexpr auto HEIGHT = 720;
-
+constexpr auto WIDTH = 800;
+constexpr auto HEIGHT = 600;
 
 int main() {
     InitWindow(WIDTH, HEIGHT, "Julia Sets");
@@ -20,9 +19,8 @@ int main() {
 
     Vector2 C{0.0f, 0.0f};
     float R{2.0f};
-    int max_iterations{300};
+    int max_iterations{1000};
 
-    // SetShaderValue(shader, C_Loc, &C, SHADER_UNIFORM_VEC2);
     SetShaderValue(shader, R_Loc, &R, SHADER_UNIFORM_FLOAT);
     SetShaderValue(shader, max_iterations_Loc, &max_iterations, SHADER_UNIFORM_INT);
 
@@ -30,8 +28,10 @@ int main() {
 
     while (!WindowShouldClose())
     {
-        float t = static_cast<float>(GetTime()) * 0.08f;
-        C = { 0.7885f * std::cos(t), 0.7885f * std::sin(t) };
+        float t = static_cast<float>(GetTime()) * 0.2f;
+        float k = 0.98f;
+        C = {k * (0.5f * std::cos(t) - 0.25f * std::cos(2 * t)),
+             k * (0.5f * std::sin(t) - 0.25f * std::sin(2 * t))};
         SetShaderValue(shader, C_Loc, &C, SHADER_UNIFORM_VEC2);
 
         BeginDrawing();
