@@ -43,13 +43,36 @@ float count_smooth_iterations(vec2 z) {
     return iter + 1 - log2(log2(length(z)));
 }
 
+vec3 palette(float t) {
+#define PALETTE_NEBULA
+
+#if defined(PALLETTE_ACID_MELT)
+    vec3 a = vec3(0.5, 0.5, 0.5);
+    vec3 b = vec3(0.5, 0.5, 0.5);
+    vec3 c = vec3(2.0, 1.0, 0.0);
+    vec3 d = vec3(0.5, 0.2, 0.25);
+    return a + b * cos(6.28318530718 * (c * t + d));
+#elif defined(PALLETTE_VAPORWAVE)
+    vec3 a = vec3(0.5, 0.5, 0.5);
+    vec3 b = vec3(0.5, 0.5, 0.5);
+    vec3 c = vec3(2.0, 1.0, 1.0);
+    vec3 d = vec3(0.0, 0.25, 0.25);
+    return a + b * cos(6.28318530718 * (c * t + d));
+#elif defined(PALETTE_NEBULA)
+    vec3 a = vec3(0.40, 0.25, 0.55);
+    vec3 b = vec3(0.40, 0.25, 0.45);
+    vec3 d = vec3(0.50, 0.55, 0.60);
+    return a + b * cos(6.28318530718 * (t + d));
+#endif
+}
+
 vec4 smooth_iterations_to_color(float mu, vec2 z) {
     if (mu < 0.0) return vec4(vec3(0.0), 1.0);
 
-    float t = mu * 0.04;
+    // float t = mu * 0.007;
+    float t = mu * 0.03;
     vec3 d = vec3(0.0, 0.1, 0.2);
-    float TAU = 6.28318530718;
-    vec3 v = 0.5 + 0.5 * cos(TAU * (t + d));
+    vec3 v = palette(t);
 
     return vec4(v, 1.0);
 }

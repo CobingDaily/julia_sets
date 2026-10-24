@@ -1,11 +1,18 @@
 #include "raylib.h"
 #include <cmath>
 
-constexpr auto WIDTH = 800;
-constexpr auto HEIGHT = 600;
+
+constexpr auto WIDTH = 1920;
+constexpr auto HEIGHT = 1080;
+
+enum class Side {INNER, OUTER};
+constexpr auto SIDE = Side::INNER;
+
 
 int main() {
+    SetConfigFlags(FLAG_WINDOW_HIGHDPI | FLAG_MSAA_4X_HINT);
     InitWindow(WIDTH, HEIGHT, "Julia Sets");
+    ToggleBorderlessWindowed();
 
     Image image = GenImageColor(WIDTH, HEIGHT, WHITE);
     Texture2D texture = LoadTextureFromImage(image);
@@ -24,12 +31,16 @@ int main() {
     SetShaderValue(shader, R_Loc, &R, SHADER_UNIFORM_FLOAT);
     SetShaderValue(shader, max_iterations_Loc, &max_iterations, SHADER_UNIFORM_INT);
 
-    SetTargetFPS(120);
+    SetTargetFPS(60);
 
     while (!WindowShouldClose())
     {
         float t = static_cast<float>(GetTime()) * 0.2f;
-        float k = 0.98f;
+        float k = 0.99;
+        if constexpr (SIDE == Side::OUTER) {
+            k = 1.7;
+        }
+
         C = {k * (0.5f * std::cos(t) - 0.25f * std::cos(2 * t)),
              k * (0.5f * std::sin(t) - 0.25f * std::sin(2 * t))};
         SetShaderValue(shader, C_Loc, &C, SHADER_UNIFORM_VEC2);
