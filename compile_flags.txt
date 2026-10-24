@@ -1,4 +1,6 @@
+-xc++
 -std=c++23
 -Ithirdparty/raylib-6.2/src
+-Ithirdparty
 -Wall
 -Wextra

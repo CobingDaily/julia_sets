@@ -1,6 +1,8 @@
 #include "raylib.h"
 #include <cmath>
 
+#define MSF_GIF_IMPL
+#include "msf_gif.h"
 
 constexpr auto WIDTH = 1920;
 constexpr auto HEIGHT = 1080;
